@@ -1,0 +1,9 @@
+package message;
+
+message Data {
+	optional string key = 1;
+	optional string value = 2;
+	
+	repeated Data data = 3;
+}
+
