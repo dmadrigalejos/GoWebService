@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 
 	"code.google.com/p/gogoprotobuf/proto"
 	"github.com/dmadrigalejos/GoWebService/server/message"
@@ -18,16 +19,16 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	proto.Unmarshal(body, data)
 	result := &message.Data{}
 
-	switch *data.Value {
-	case "exist":
-		result = exist(data)
-	case "save":
-		result = save(data)
+	switch strings.ToLower(*data.Method) {
+	case "search":
+		result = Search(data)
+	case "insert":
+		result = insert(data)
 	case "update":
 		result = update(data)
 	default:
-		key := "Error"
-		result = &message.Data{Key: &key}
+		key := "{Error: Method not supported.}"
+		result.Data = &key
 	}
 
 	// convert result to proto
@@ -37,50 +38,41 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, string(msgBuf))
 }
 
-func exist(data *message.Data) *message.Data {
-	fmt.Printf("Method => %s\n", *data.Value)
-	for i := range data.Data {
-		fmt.Printf("Param%d => %s\n", i, *data.Data[i].Value)
-	}
+func Search(data *message.Data) *message.Data {
+	fmt.Printf("Method => %s\n", *data.Method)
+	fmt.Printf("Data => %s\n", *data.Data)
 
 	// query
 
 	// create reply
-	resultKey := "result"
-	resultValue := "okay"
-	result := &message.Data{Key: &resultKey, Value: &resultValue}
+	result := "{result:okay}"
+	reply := &message.Data{Data: &result}
 
-	return result
+	return reply
 }
 
-func save(data *message.Data) *message.Data {
-	fmt.Printf("Method => %s\n", *data.Value)
-	for i := range data.Data {
-		fmt.Printf("Param%d => %s\n", i, *data.Data[i].Value)
-	}
+func insert(data *message.Data) *message.Data {
+	fmt.Printf("Method => %s\n", *data.Method)
+	fmt.Printf("Data => %s\n", *data.Data)
 
 	// query
 
 	// create reply
-	resultKey := "result"
-	resultValue := "okay"
-	result := &message.Data{Key: &resultKey, Value: &resultValue}
+	result := "{result:okay}"
+	reply := &message.Data{Data: &result}
 
-	return result
+	return reply
 }
 
 func update(data *message.Data) *message.Data {
-	fmt.Printf("Method => %s\n", *data.Value)
-	for i := range data.Data {
-		fmt.Printf("Param%d => %s\n", i, *data.Data[i].Value)
-	}
+	fmt.Printf("Method => %s\n", *data.Method)
+	fmt.Printf("Data => %s\n", *data.Data)
 
 	// query
 
 	// create reply
-	resultKey := "result"
-	resultValue := "okay"
-	result := &message.Data{Key: &resultKey, Value: &resultValue}
+	result := "{result:okay}"
+	reply := &message.Data{Data: &result}
 
-	return result
+	return reply
 }

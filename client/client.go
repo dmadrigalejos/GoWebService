@@ -7,6 +7,6 @@ import (
 
 func main() {
 	cli := clientlib.New("http://localhost:8080/testdb")
-	reply := cli.Request("save", "www.google.com", "123", "abc", "xmy", "qqq")
+	reply := cli.Request("Search", "{url:www.google.com}")
 	fmt.Println(reply)
 }

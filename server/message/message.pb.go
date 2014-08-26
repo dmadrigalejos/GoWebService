@@ -23,9 +23,8 @@ var _ = &json.SyntaxError{}
 var _ = math.Inf
 
 type Data struct {
-	Key              *string `protobuf:"bytes,1,opt,name=key" json:"key,omitempty"`
-	Value            *string `protobuf:"bytes,2,opt,name=value" json:"value,omitempty"`
-	Data             []*Data `protobuf:"bytes,3,rep,name=data" json:"data,omitempty"`
+	Method           *string `protobuf:"bytes,1,opt,name=method" json:"method,omitempty"`
+	Data             *string `protobuf:"bytes,2,opt,name=data" json:"data,omitempty"`
 	XXX_unrecognized []byte  `json:"-"`
 }
 
@@ -33,25 +32,18 @@ func (m *Data) Reset()         { *m = Data{} }
 func (m *Data) String() string { return proto.CompactTextString(m) }
 func (*Data) ProtoMessage()    {}
 
-func (m *Data) GetKey() string {
-	if m != nil && m.Key != nil {
-		return *m.Key
+func (m *Data) GetMethod() string {
+	if m != nil && m.Method != nil {
+		return *m.Method
 	}
 	return ""
 }
 
-func (m *Data) GetValue() string {
-	if m != nil && m.Value != nil {
-		return *m.Value
+func (m *Data) GetData() string {
+	if m != nil && m.Data != nil {
+		return *m.Data
 	}
 	return ""
-}
-
-func (m *Data) GetData() []*Data {
-	if m != nil {
-		return m.Data
-	}
-	return nil
 }
 
 func init() {
