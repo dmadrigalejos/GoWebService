@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"code.google.com/p/gogoprotobuf/proto"
-	"github.com/dan/http/message"
+	"github.com/dmadrigalejos/GoWebService/server/message"
 )
 
 type Client struct {
